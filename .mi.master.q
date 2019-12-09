@@ -11,7 +11,7 @@
 
 .mi.sendToFreeSlave:{[taskIDs]
     if[count slaves:0!select from .mi.slaves where null task,not null handle;	
-    mem:$[.mi.freeMemoryFree>2*.mi.memoryBuffer;7h$.mi.fileSizeLimit*1.05;.mi.freeMemoryFree<.mi.memoryBuffer;7h$.mi.fileSizeLimit*0.95;.mi.fileSizeLimit];
+	mem:7h$.mi.fileSizeLimit * .95 1 1.05 sum(and)scan .mi.freeMemoryFree>.mi.memoryBuffer*1 2;
     slaveInfo:update slave:` from `taskSize xdesc select taskID,taskSize,task from ([]taskID:taskIDs)#.mi.tasks;
     //assign largest task to dedicated slave
     if[all(count readWrites:exec i from slaveInfo where task=`.mi.readAndSave;not null .mi.largeFileSlave);if[null .mi.slaves[.mi.largeFileSlave]`task;slaveInfo[first readWrites;`slave]:.mi.largeFileSlave;            mem:0|mem-0^slaveInfo[0]`taskSize]];		

@@ -45,7 +45,7 @@
     colSizes:.mi.noEnumSplay[apath:` sv db,t;c;nonSymCols;symbolCols;tab];
     written:flip `typ`date`path`colSizes!(enlist `active;x`activeDate;enlist apath;enlist colSizes);
 	written:update t:data 0,symCol:`sym,sortCol:`time,symbolCols:count[written]#enlist[symbolCols]from written;
-    `t`written`uniqueSymbolsAcrossCols!(t;written;distinct raze symbolCols#f)
+    res:`t`written`uniqueSymbolsAcrossCols!(t;written;distinct raze symbolCols#f)
    };
 
 .mi.noEnumSplay:{[path;allCols;nonSymCols;symCols;x]
